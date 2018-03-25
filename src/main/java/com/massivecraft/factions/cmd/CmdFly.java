@@ -54,7 +54,18 @@ public class CmdFly extends FCommand {
                 fme.msg(TL.COMMAND_FLY_NO_ACCESS, Board.getInstance().getFactionAt(myfloc).getTag(fme));
                 return;
             }
-
+            if (!me.hasPermission("factions.fly.enemy") && toFac.getRelationTo(myFaction)== Relation.ENEMY){
+                fme.msg(TL.COMMAND_FLY_NO_ACCESS, Board.getInstance().getFactionAt(myfloc).getTag(fme));
+                return;
+            }
+            if (!me.hasPermission("factions.fly.ally") && toFac.getRelationTo(myFaction)== Relation.ALLY){
+                fme.msg(TL.COMMAND_FLY_NO_ACCESS, Board.getInstance().getFactionAt(myfloc).getTag(fme));
+                return;
+            }
+            if (!me.hasPermission("factions.fly.truce") && toFac.getRelationTo(myFaction)== Relation.TRUCE){
+                fme.msg(TL.COMMAND_FLY_NO_ACCESS, Board.getInstance().getFactionAt(myfloc).getTag(fme));
+                return;
+            }
             }
 
 
