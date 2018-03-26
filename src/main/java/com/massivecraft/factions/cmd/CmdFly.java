@@ -97,6 +97,14 @@ public class CmdFly extends FCommand {
                 } else if (!me.hasPermission("factions.fly.warzone") && toFac.isWarZone()) {
                     fme.msg(TL.COMMAND_FLY_NO_ACCESS, Board.getInstance().getFactionAt(myfloc).getTag(fme));
                     return;
+                } else if (!me.hasPermission("factions.fly.enemy") && toFac.getRelationTo(myFaction) == Relation.ENEMY) {
+                    fme.msg(TL.COMMAND_FLY_NO_ACCESS, Board.getInstance().getFactionAt(myfloc).getTag(fme));
+                    return;
+                } else if (!me.hasPermission("factions.fly.ally") && toFac.getRelationTo(myFaction) == Relation.ALLY) {
+                    fme.msg(TL.COMMAND_FLY_NO_ACCESS, Board.getInstance().getFactionAt(myfloc).getTag(fme));
+                    return;
+                } else if (!me.hasPermission("factions.fly.truce") && toFac.getRelationTo(myFaction) == Relation.TRUCE) {
+                    fme.msg(TL.COMMAND_FLY_NO_ACCESS, Board.getInstance().getFactionAt(myfloc).getTag(fme));
                 }
 
             }
@@ -113,6 +121,14 @@ public class CmdFly extends FCommand {
                 } else if (!me.hasPermission("factions.fly.warzone") && toFac.isWarZone()) {
                     fme.msg(TL.COMMAND_FLY_NO_ACCESS, Board.getInstance().getFactionAt(myfloc).getTag(fme));
                     return;
+                } else if (!me.hasPermission("factions.fly.enemy") && toFac.getRelationTo(myFaction) == Relation.ENEMY) {
+                    fme.msg(TL.COMMAND_FLY_NO_ACCESS, Board.getInstance().getFactionAt(myfloc).getTag(fme));
+                    return;
+                } else if (!me.hasPermission("factions.fly.ally") && toFac.getRelationTo(myFaction) == Relation.ALLY) {
+                    fme.msg(TL.COMMAND_FLY_NO_ACCESS, Board.getInstance().getFactionAt(myfloc).getTag(fme));
+                    return;
+                } else if (!me.hasPermission("factions.fly.truce") && toFac.getRelationTo(myFaction) == Relation.TRUCE) {
+                    fme.msg(TL.COMMAND_FLY_NO_ACCESS, Board.getInstance().getFactionAt(myfloc).getTag(fme));
                 }
 
             }
@@ -204,6 +220,15 @@ public class CmdFly extends FCommand {
           return true;
         }
         if (player.hasPermission("factions.fly.safezone") && toFac.isSafeZone()){
+            return true;
+        }
+        if (player.hasPermission("factions.fly.enemy") && toFac.getRelationTo(fplayer.getFaction()) == Relation.ENEMY) {
+            return true;
+        }
+        if (player.hasPermission("factions.fly.ally") && toFac.getRelationTo(fplayer.getFaction()) == Relation.ALLY) {
+            return true;
+        }
+        if (player.hasPermission("factions.fly.truce") && toFac.getRelationTo(fplayer.getFaction()) == Relation.TRUCE) {
             return true;
         }
         return false;
