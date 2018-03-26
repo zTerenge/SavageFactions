@@ -66,6 +66,10 @@ public class CmdFly extends FCommand {
                 fme.msg(TL.COMMAND_FLY_NO_ACCESS, Board.getInstance().getFactionAt(myfloc).getTag(fme));
                 return;
             }
+            if (!me.hasPermission("factions.fly.neutral") && toFac.getRelationTo(myFaction) == Relation.NEUTRAL) {
+                fme.msg(TL.COMMAND_FLY_NO_ACCESS, Board.getInstance().getFactionAt(myfloc).getTag(fme));
+                return;
+            }
             }
 
 
@@ -105,6 +109,8 @@ public class CmdFly extends FCommand {
                     return;
                 } else if (!me.hasPermission("factions.fly.truce") && toFac.getRelationTo(myFaction) == Relation.TRUCE) {
                     fme.msg(TL.COMMAND_FLY_NO_ACCESS, Board.getInstance().getFactionAt(myfloc).getTag(fme));
+                } else if (!me.hasPermission("factions.fly.neutral") && toFac.getRelationTo(myFaction) == Relation.NEUTRAL) {
+                    fme.msg(TL.COMMAND_FLY_NO_ACCESS, Board.getInstance().getFactionAt(myfloc).getTag(fme));
                 }
 
             }
@@ -128,6 +134,8 @@ public class CmdFly extends FCommand {
                     fme.msg(TL.COMMAND_FLY_NO_ACCESS, Board.getInstance().getFactionAt(myfloc).getTag(fme));
                     return;
                 } else if (!me.hasPermission("factions.fly.truce") && toFac.getRelationTo(myFaction) == Relation.TRUCE) {
+                    fme.msg(TL.COMMAND_FLY_NO_ACCESS, Board.getInstance().getFactionAt(myfloc).getTag(fme));
+                } else if (!me.hasPermission("factions.fly.neutral") && toFac.getRelationTo(myFaction) == Relation.NEUTRAL) {
                     fme.msg(TL.COMMAND_FLY_NO_ACCESS, Board.getInstance().getFactionAt(myfloc).getTag(fme));
                 }
 
@@ -229,6 +237,9 @@ public class CmdFly extends FCommand {
             return true;
         }
         if (player.hasPermission("factions.fly.truce") && toFac.getRelationTo(fplayer.getFaction()) == Relation.TRUCE) {
+            return true;
+        }
+        if (player.hasPermission("factions.fly.neutral") && toFac.getRelationTo(fplayer.getFaction()) == Relation.NEUTRAL) {
             return true;
         }
         return false;

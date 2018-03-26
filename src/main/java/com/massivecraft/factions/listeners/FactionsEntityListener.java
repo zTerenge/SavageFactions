@@ -595,6 +595,11 @@ public class FactionsEntityListener implements Listener {
                     fdamager.msg(TL.PLAYER_PVP_CANTHURT, fvictim.describeTo(fdamager));
                     e.setCancelled(true);
                 }
+                if (fvictim.getRelationTo(fdamager) == Relation.ENEMY) {
+                    if (fvictim.isFlying()) {
+                        fvictim.setFFlying(false, true);
+                    }
+                }
             }
         }
     }

@@ -954,6 +954,15 @@ public abstract class MemoryFPlayer implements FPlayer {
         if ((!faction.isWilderness() && getPlayer().hasPermission("factions.fly.wilderness")) || (faction.isSafeZone() && getPlayer().hasPermission("factions.fly.safezone") )|| (faction.isWarZone() && getPlayer().hasPermission("factions.fly.warzone"))) {
             return false;
         }
+        if (!getPlayer().hasPermission("factions.fly.ally") && getRelationToLocation() == Relation.ALLY) {
+            return false;
+        }
+        if (!getPlayer().hasPermission("factions.fly.truce") && getRelationToLocation() == Relation.TRUCE) {
+            return false;
+        }
+        if (!getPlayer().hasPermission("factions.fly.neutral") && getRelationToLocation() == Relation.NEUTRAL) {
+            return false;
+        }
         if (faction == getFaction() && getRole() == Role.ADMIN) {
             return true;
         }

@@ -76,7 +76,7 @@ public class CmdShow extends FCommand {
         if (show == null || show.isEmpty()) {
             show = defaults;
         }
-        for (int i = 0; i <= show.size()-1; i ++){
+     /*   for (int i = 0; i <= show.size()-1; i ++){
             if (show.get(i).contains("{description}")){
                 show.set(i,show.get(i).replace("{description}",faction.getDescription()));
             }
@@ -134,7 +134,7 @@ public class CmdShow extends FCommand {
                     show.set(i,show.get(i).replace("{offline-list}",string.toString()));
                 }
             }
-        }
+        }*/
 
         if (!faction.isNormal()) {
             String tag = faction.getTag(fme);

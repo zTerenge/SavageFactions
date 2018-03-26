@@ -27,7 +27,6 @@ public class CmdBanlist extends FCommand {
         senderMustBePlayer = true;
         senderMustBeMember = false;
         senderMustBeModerator = false;
-        senderMustBeColeader = false;
         senderMustBeAdmin = false;
     }
 
@@ -40,6 +39,11 @@ public class CmdBanlist extends FCommand {
 
         if (target == Factions.getInstance().getWilderness()) {
             sender.sendMessage(TL.COMMAND_BANLIST_NOFACTION.toString());
+            return;
+        }
+
+        if (target == null) {
+            sender.sendMessage(TL.COMMAND_BANLIST_INVALID.format(argAsString(0)));
             return;
         }
 
