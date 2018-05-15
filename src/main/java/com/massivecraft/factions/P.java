@@ -153,10 +153,10 @@ public class P extends MPlugin {
 
         int version = Integer.parseInt(ReflectionUtils.PackageType.getServerVersion().split("_")[1]);
         if (version == 7) {
-            P.p.log("Minecraft Version 1.7 found, disabling banners, itemflags inside GUIs, and Titles.");
+            P.p.log("Server Minecraft in 1.7, disabilitazione di banner, itemflag all'interno di GUI e titoli.");
             mc17 = true;
         } else if (version == 8) {
-            P.p.log("Minecraft Version 1.8 found, Title Fadeouttime etc will not be configurable.");
+            P.p.log("Server Minecraft in 1.8, disabilitazione della configurazione degli elementi non necessari.");
             mc18 = true;
         }
 
@@ -187,14 +187,14 @@ public class P extends MPlugin {
         if (clip != null && clip.isEnabled()) {
             this.clipPlaceholderAPIManager = new ClipPlaceholderAPIManager();
             if (this.clipPlaceholderAPIManager.register()) {
-                log(Level.INFO, "Successfully registered placeholders with PlaceholderAPI.");
+                log(Level.INFO, "Placeholder registrati con successo tramite PlaceholderAPI.");
             }
         }
 
         Plugin mvdw = getServer().getPluginManager().getPlugin("MVdWPlaceholderAPI");
         if (mvdw != null && mvdw.isEnabled()) {
             this.mvdwPlaceholderAPIManager = true;
-            log(Level.INFO, "Found MVdWPlaceholderAPI. Adding hooks.");
+            log(Level.INFO, "Stai utilizzando MVdWPlaceholderAPI. Aggiungo nuovi hooks.");
         }
     }
 
@@ -263,7 +263,7 @@ public class P extends MPlugin {
 
     @Override
     public void postAutoSave() {
-        //Board.getInstance().forceSave(); Not sure why this was there as it's called after the board is already saved.
+        //Board.getInstance().forceSave()
         Conf.save();
     }
     public ItemStack createItem(Material material, int amount, short datavalue, String name, List<String> lore) {
@@ -305,18 +305,18 @@ public class P extends MPlugin {
             return handleCommand(sender, "/f help", false);
         }
 
-        // otherwise, needs to be handled; presumably another plugin directly ran the command
+        
         String cmd = Conf.baseCommandAliases.isEmpty() ? "/f" : "/" + Conf.baseCommandAliases.get(0);
         return handleCommand(sender, cmd + " " + TextUtil.implode(Arrays.asList(split), " "), false);
     }
 
     public void createTimedHologram(final Location location, String text, Long timeout){
         ArmorStand as = (ArmorStand) location.add(0.5,1,0.5).getWorld().spawnEntity(location, EntityType.ARMOR_STAND); //Spawn the ArmorStand
-        as.setVisible(false); //Makes the ArmorStand invisible
-        as.setGravity(false); //Make sure it doesn't fall
-        as.setCanPickupItems(false); //I'm not sure what happens if you leave this as it is, but you might as well disable it
-        as.setCustomName(P.p.color(text)); //Set this to the text you want
-        as.setCustomNameVisible(true); //This makes the text appear no matter if your looking at the entity or not
+        as.setVisible(false);
+        as.setGravity(false);
+        as.setCanPickupItems(false);
+        as.setCustomName(P.p.color(text));
+        as.setCustomNameVisible(true);
         final ArmorStand armorStand = as;
         Bukkit.getScheduler().scheduleSyncDelayedTask(P.p, new Runnable() {
             @Override
@@ -330,29 +330,25 @@ public class P extends MPlugin {
 
 
     // -------------------------------------------- //
-    // Functions for other plugins to hook into
+    // Funzioni di altri plugin che utilizzano hook //
     // -------------------------------------------- //
 
-    // This value will be updated whenever new hooks are added
+    // Questo valore verrà aggiornato ogni volta che vengono aggiunti nuovi hook
     public int hookSupportVersion() {
         return 3;
     }
 
-    // If another plugin is handling insertion of chat tags, this should be used to notify Factions
+    // Se un altro plugin sta gestendo l'inserimento di tag di chat, dovrebbe essere automaticamente utilizzato anche per Factions.
     public void handleFactionTagExternally(boolean notByFactions) {
         Conf.chatTagHandledByAnotherPlugin = notByFactions;
     }
 
-    // Simply put, should this chat event be left for Factions to handle? For now, that means players with Faction Chat
-    // enabled or use of the Factions f command without a slash; combination of isPlayerFactionChatting() and isFactionsCommand()
-
+    
     public boolean shouldLetFactionsHandleThisChat(AsyncPlayerChatEvent event) {
         return event != null && (isPlayerFactionChatting(event.getPlayer()) || isFactionsCommand(event.getMessage()));
     }
 
 
-    // Does player have Faction Chat enabled? If so, chat plugins should preferably not do channels,
-    // local chat, or anything else which targets individual recipients, so Faction Chat can be done
     public boolean isPlayerFactionChatting(Player player) {
         if (player == null) {
             return false;
@@ -362,20 +358,15 @@ public class P extends MPlugin {
         return me != null && me.getChatMode().isAtLeast(ChatMode.ALLIANCE);
     }
 
-    // Is this chat message actually a Factions command, and thus should be left alone by other plugins?
-
-    // TODO: GET THIS BACK AND WORKING
 
     public boolean isFactionsCommand(String check) {
         return !(check == null || check.isEmpty()) && this.handleCommand(null, check, true);
     }
 
-    // Get a player's faction tag (faction name), mainly for usage by chat plugins for local/channel chat
     public String getPlayerFactionTag(Player player) {
         return getPlayerFactionTagRelation(player, null);
     }
 
-    // Same as above, but with relation (enemy/neutral/ally) coloring potentially added to the tag
     public String getPlayerFactionTagRelation(Player speaker, Player listener) {
         String tag = "~";
 
@@ -388,14 +379,13 @@ public class P extends MPlugin {
             return tag;
         }
 
-        // if listener isn't set, or config option is disabled, give back uncolored tag
         if (listener == null || !Conf.chatTagRelationColored) {
             tag = me.getChatTag().trim();
         } else {
             FPlayer you = FPlayers.getInstance().getByPlayer(listener);
             if (you == null) {
                 tag = me.getChatTag().trim();
-            } else  // everything checks out, give the colored tag
+            } else  
             {
                 tag = me.getChatTag(you).trim();
             }
@@ -407,7 +397,7 @@ public class P extends MPlugin {
         return tag;
     }
 
-    // Get a player's title within their faction, mainly for usage by chat plugins for local/channel chat
+
     public String getPlayerTitle(Player player) {
         if (player == null) {
             return "";
@@ -426,7 +416,6 @@ public class P extends MPlugin {
         return line;
     }
 
-    //colors a string list
     public List<String> colorList(List<String> lore) {
         for (int i = 0; i <= lore.size()-1;i++){
             lore.set(i,color(lore.get(i)));
@@ -434,12 +423,10 @@ public class P extends MPlugin {
         return lore;
     }
 
-    // Get a list of all faction tags (names)
     public Set<String> getFactionTags() {
         return Factions.getInstance().getFactionTags();
     }
 
-    // Get a list of all players in the specified faction
     public Set<String> getPlayersInFaction(String factionTag) {
         Set<String> players = new HashSet<>();
         Faction faction = Factions.getInstance().getByTag(factionTag);
@@ -451,7 +438,6 @@ public class P extends MPlugin {
         return players;
     }
 
-    // Get a list of all online players in the specified faction
     public Set<String> getOnlinePlayersInFaction(String factionTag) {
         Set<String> players = new HashSet<>();
         Faction faction = Factions.getInstance().getByTag(factionTag);
