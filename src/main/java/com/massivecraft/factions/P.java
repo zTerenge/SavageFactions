@@ -43,14 +43,11 @@ import java.util.logging.Level;
 
 public class P extends MPlugin {
 
-    // Our single plugin instance.
-    // Single 4 life.
     public static P p;
     public static Permission perms = null;
 
 
     ItemStack item = new ItemStack(Material.CAKE);
-    // Persistence related
     private boolean locked = false;
 
     public boolean getLocked() {
@@ -86,7 +83,6 @@ public class P extends MPlugin {
         sound = sound.split(":")[0];
         p.playSound(p.getLocation(), Sound.valueOf(sound), pitch, 5.0F);
     }
-    // Commands
     public FCmdRoot cmdBase;
     public CmdAutoHelp cmdAutoHelp;
 
@@ -110,7 +106,6 @@ public class P extends MPlugin {
         this.loadSuccessful = false;
         saveDefaultConfig();
 
-        // Load Conf from disk
         Conf.load();
         Essentials.setup();
         hookedPlayervaults = setupPlayervaults();
@@ -128,10 +123,7 @@ public class P extends MPlugin {
         Board.getInstance().load();
         Board.getInstance().clean();
 
-        //inspect stuff
-
-
-        // Add Base Commands
+        
         this.cmdBase = new FCmdRoot();
         this.cmdAutoHelp = new CmdAutoHelp();
         this.getBaseCommands().add(cmdBase);
@@ -145,10 +137,8 @@ public class P extends MPlugin {
 
         EngineDynmap.getInstance().init();
 
-        // start up task which runs the autoLeaveAfterDaysOfInactivity routine
         startAutoLeaveTask(false);
 
-        //massive stats
         MassiveStats massive = new MassiveStats(this);
 
         int version = Integer.parseInt(ReflectionUtils.PackageType.getServerVersion().split("_")[1]);
@@ -160,7 +150,6 @@ public class P extends MPlugin {
             mc18 = true;
         }
 
-        // Register Event Handlers
         getServer().getPluginManager().registerEvents(new FactionsPlayerListener(this), this);
         getServer().getPluginManager().registerEvents(new FactionsChatListener(this), this);
         getServer().getPluginManager().registerEvents(new FactionsEntityListener(this), this);
