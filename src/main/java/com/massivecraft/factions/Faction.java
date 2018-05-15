@@ -198,10 +198,6 @@ public interface Faction extends EconomyParticipator {
 
     void resetPerms();
 
-    // -------------------------------
-    // Relation and relation colors
-    // -------------------------------
-
     Map<Permissable, Map<PermissableAction, Access>> getPermissions();
 
     @Override
@@ -225,9 +221,6 @@ public interface Faction extends EconomyParticipator {
 
     int getRelationCount(Relation relation);
 
-    // ----------------------------------------------//
-    // Power
-    // ----------------------------------------------//
     double getPower();
 
     double getPowerMax();
@@ -240,13 +233,8 @@ public interface Faction extends EconomyParticipator {
 
     int getLandRoundedInWorld(String worldName);
 
-    // -------------------------------
-    // FPlayers
-    // -------------------------------
-
     boolean hasLandInflation();
 
-    // maintain the reference list of FPlayers in this faction
     void refreshFPlayers();
 
     boolean addFPlayer(FPlayer fplayer);
@@ -267,30 +255,19 @@ public interface Faction extends EconomyParticipator {
 
     ArrayList<Player> getOnlinePlayers();
 
-    // slightly faster check than getOnlinePlayers() if you just want to see if
-    // there are any players online
     boolean hasPlayersOnline();
 
     void memberLoggedOff();
 
-    // used when current leader is about to be removed from the faction;
-    // promotes new leader, or disbands faction if no other members left
     void promoteNewLeader();
 
     Role getDefaultRole();
 
     void setDefaultRole(Role role);
 
-    // ----------------------------------------------//
-    // Messages
-    // ----------------------------------------------//
     void msg(String message, Object... args);
 
     void sendMessage(String message);
-
-    // ----------------------------------------------//
-    // Ownership of specific claims
-    // ----------------------------------------------//
 
     void sendMessage(List<String> messages);
 
@@ -318,9 +295,6 @@ public interface Faction extends EconomyParticipator {
 
     boolean playerHasOwnershipRights(FPlayer fplayer, FLocation loc);
 
-    // ----------------------------------------------//
-    // Persistance and entity management
-    // ----------------------------------------------//
     void remove();
 
     Set<FLocation> getAllClaims();
