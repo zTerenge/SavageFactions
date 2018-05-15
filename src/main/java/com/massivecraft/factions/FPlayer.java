@@ -14,18 +14,6 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-
-/**
- * Logged in players always have exactly one FPlayer instance. Logged out players may or may not have an FPlayer
- * instance. They will always have one if they are part of a faction. This is because only players with a faction are
- * saved to disk (in order to not waste disk space).
- * <p/>
- * The FPlayer is linked to a minecraft player using the player name.
- * <p/>
- * The same instance is always returned for the same player. This means you can use the == operator. No .equals method
- * necessary.
- */
-
 public interface FPlayer extends EconomyParticipator {
     void login();
 
@@ -97,7 +85,6 @@ public interface FPlayer extends EconomyParticipator {
 
     void setShowScoreboard(boolean show);
 
-    // FIELD: account
     String getAccountId();
 
     void resetFactionData(boolean doSpoutUpdate);
@@ -126,27 +113,18 @@ public interface FPlayer extends EconomyParticipator {
 
     String getTag();
 
-    // Base concatenations:
-
     String getNameAndSomething(String something);
 
     String getNameAndTitle();
 
     String getNameAndTag();
 
-    // Colored concatenations:
-    // These are used in information messages
-
     String getNameAndTitle(Faction faction);
 
     String getNameAndTitle(FPlayer fplayer);
 
-    // Chat Tag:
-    // These are injected into the format of global chat messages.
-
     String getChatTag();
 
-    // Colored Chat Tag
     String getChatTag(Faction faction);
 
     String getChatTag(FPlayer fplayer);
@@ -159,14 +137,9 @@ public interface FPlayer extends EconomyParticipator {
 
     boolean hasMoney(int amt);
 
-    //inspect Stuff
-
     boolean isInspectMode();
 
     void setInspectMode(boolean status);
-
-
-    // Fly Checks
 
     Boolean canflyinWilderness();
 
@@ -181,10 +154,6 @@ public interface FPlayer extends EconomyParticipator {
     Boolean canflyinTruce();
 
     Boolean canflyinNeutral();
-
-    // -------------------------------
-    // Relation and relation colors
-    // -------------------------------
 
     @Override
     String describeTo(RelationParticipator that, boolean ucfirst);
@@ -203,18 +172,10 @@ public interface FPlayer extends EconomyParticipator {
     @Override
     ChatColor getColorTo(RelationParticipator rp);
 
-
     String getRolePrefix();
-
-    //----------------------------------------------//
-    // Health
-    //----------------------------------------------//
+    
     void heal(int amnt);
 
-
-    //----------------------------------------------//
-    // Power
-    //----------------------------------------------//
     double getPower();
 
     void alterPower(double delta);
@@ -235,9 +196,6 @@ public interface FPlayer extends EconomyParticipator {
 
     void onDeath();
 
-    //----------------------------------------------//
-    // Territory
-    //----------------------------------------------//
     boolean isInOwnTerritory();
 
     boolean isInOthersTerritory();
@@ -249,10 +207,6 @@ public interface FPlayer extends EconomyParticipator {
     boolean isInEnemyTerritory();
 
     void sendFactionHereMessage(Faction from);
-
-    // -------------------------------
-    // Actions
-    // -------------------------------
 
     void leave(boolean makePay);
 
@@ -315,11 +269,6 @@ public interface FPlayer extends EconomyParticipator {
     String getEnteringWarp();
 
     boolean checkIfNearbyEnemies();
-
-
-    // -------------------------------
-    // Warmups
-    // -------------------------------
 
     boolean isWarmingUp();
 
